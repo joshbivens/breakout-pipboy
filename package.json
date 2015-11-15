@@ -1,0 +1,14 @@
+{
+  "name": "barkanoid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "J Bivens",
+  "license": "MIT",
+  "dependencies": {
+    "phaser": "^2.4.4"
+  }
+}
