@@ -1,3 +1,4 @@
+
 var game = new Phaser.Game(
   800, 600,
   Phaser.AUTO,
@@ -16,13 +17,13 @@ var lives = 3;
 var score = 0;
 
 var textDefault = {
-  font: "20px Oswald",
+  font: "20px Arial",
   align: "left",
   fill: "#FFF"
 };
 
 var textLarge = {
-  font: "40px Oswald",
+  font: "40px Arial",
   align: "center",
   fill: "#FFF"
 };
@@ -59,9 +60,9 @@ function phaserCreate() {
     }
   }
 
-  paddle = game add.sprite(game.world.centerX, 500, "paddle");
+  paddle = game.add.sprite(game.world.centerX, 500, "paddle");
   paddle.anchor.setTo(0.5, 0.5); //Pixels?
-  game.physics.enabled(paddle, Phaser.Physics.ARCADE);
+  game.physics.enable(paddle, Phaser.Physics.ARCADE);
   paddle.body.collideWorldBounds = true;
   paddle.body.bounce.set(1);
   paddle.body.immovable = true;
@@ -95,7 +96,7 @@ function phaserUpdate() {
     ball.body.x = paddle.x;
   } else {
     game.physics.arcade.collide(ball, paddle, helpers.ballCollideWithPaddle, null, this);
-    game.physics.arcade.collide.(ball, tiles, helpers.ballCollideWithTile, null, this);
+    game.physics.arcade.collide(ball, tiles, helpers.ballCollideWithTile, null, this);
   }
 }
 
