@@ -21,7 +21,7 @@ var textDefault = {
   fill: "#FFF"
 };
 
-var textBold = {
+var textLarge = {
   font: "40px Oswald",
   align: "center",
   fill: "#FFF"
@@ -59,5 +59,24 @@ function phaserCreate() {
     }
   }
 
+  paddle = game add.sprite(game.world.centerX, 500, "paddle");
+  paddle.anchor.setTo(0.5, 0.5); //Pixels?
+  game.physics.enabled(paddle, Phaser.Physics.ARCADE);
+  paddle.body.collideWorldBounds = true;
+  paddle.body.bounce.set(1);
+  paddle.body.immovable = true;
 
+  ball = game.add.sprite(game.world.centerX, paddle.y - 16, "ball");
+  ball.anchor.set(0.5);
+  ball.checkWorldBounds = true;
+  game.physics.enable(ball, Phaser.Physics.ARCADE);
+  ball.body.collideWorldBounds = true;
+  ball.body.bounce.set(1);
+  ball.events.onOutOfBounds.add(helpers.death, this);
+
+  scoreText = game.add.text(32, 550, "score: 0", textDefault);
+  livesText = game.add.text(680, 550, "lives: 3", textDefault);
+  introText = game.add.text(game.world.centerX, 400, "-Click to start-", textLarge);
+  introText.anchor.setTo(0.5, 0.5);
+  game.input.onDown.add(helpers.release, this);
 }
