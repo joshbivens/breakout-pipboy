@@ -13,7 +13,7 @@ app.on("window-all-closed", function() {
 
 app.on("ready", function() {
   mainWindow = new browserWindow({width: 815, height: 615});
-  mainWindow.loadUrl("file://" + __dirname + "/index.html");
+  mainWindow.loadURL("file://" + __dirname + "/index.html");
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
