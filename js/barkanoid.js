@@ -2,7 +2,7 @@ var game = new Phaser.Game(
   800, 600,
   Phaser.AUTO,
   "game",
-  {
+  { // These three function complete the game
     preload: phaserPreload,
     create: phaserCreate,
     update: phaserUpdate
@@ -78,5 +78,86 @@ function phaserCreate() {
   livesText = game.add.text(680, 550, "lives: 3", textDefault);
   introText = game.add.text(game.world.centerX, 400, "-Click to start-", textLarge);
   introText.anchor.setTo(0.5, 0.5);
-  game.input.onDown.add(helpers.release, this);
+
+  game.input.onDown.add(helpers.release, this); // Why isn't this in phaserUpdate? Because that's where it's instantiated.
 }
+
+function phaserUpdate() {
+  paddle.x = game.input.x;
+
+  if(paddle.x < 24) {
+    paddle.x = 24;
+  } else if (paddle.x > game.width - 24) {
+    paddle.x = game.width - 24;
+  }
+
+  if(ballOnPaddle) { // Which is initially set to true
+    ball.body.x = paddle.x;
+  } else {
+    game.physics.arcade.collide(ball, paddle, helpers.ballCollideWithPaddle, null, this);
+    game.physics.arcade.collide.(ball, tiles, helpers.ballCollideWithTile, null, this);
+  }
+}
+
+// Helpers
+var helpers = {
+  release: function() {
+    if(ballOnPaddle) {
+      ballOnPaddle = false;
+      ball.body.velocity.y = -300;
+      ball.body.velocity.x = -75;
+      introText.visible = false;
+    }
+  },
+
+  death: function() {
+    lives--;
+    livesText.text = "lives: " + lives;
+
+    if(lives === 0) {
+      helpers.gameOver();
+    } else {
+      ballOnPaddle = true;
+      ball.reset(paddle.body.x + 16, paddle.y - 16);
+    }
+  },
+
+  gameOver: function() {
+    ball.body.velocity.setTo(0, 0);
+    introText.text = "Game Over!";
+    introText.visible = true;
+  },
+
+  ballCollideWithTile: function(ball, tile) {
+    tile.kill();
+    score += 10;
+    scoreText.text = "score: " + score;
+
+    if(tiles.countLiving() <= 0) { //countLiving is a Phaser method
+      score += 1000;
+      scoreText.text = "score: " + score;
+      introText.text = "-Next Level-";
+
+      ballOnPaddle = true;
+      ball.body.velocity.set(0);
+      ball.x = paddle.y + 16;
+      ball.y = paddle.y - 16;
+
+      tiles.callAll("revive"); // Another Phaser method
+    }
+  },
+
+  ballCollideWithPaddle: function(ball, tile) {
+    var diff = 0;
+
+    if(ball.x < paddle.x) {
+      diff = paddle.x - ball.x;
+      ball.body.velocity.x = (-10 * diff);
+    } else if (ball.x > paddle.x) {
+      diff = ball.x -paddle.x;
+      ball.body.velocity.x = (10 * diff);
+    } else {
+      ball.body.velocity.x = 2 + Math.random() * 8;
+    }
+  }
+};
