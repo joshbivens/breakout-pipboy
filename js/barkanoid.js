@@ -162,7 +162,7 @@ var helpers = {
     if(tiles.countLiving() <= 0) { //countLiving is a Phaser method
       score += 1000;
       scoreText.text = "score: " + score;
-      introText.text = "-Next Level-";
+      introText.text = "Next Level";
 
       ballOnPaddle = true;
       ball.body.velocity.set(0);
