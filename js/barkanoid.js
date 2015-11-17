@@ -10,7 +10,7 @@ var game = new Phaser.Game(
   }
 );
 
-var ball, paddle, tiles, livesText, introText, pauseText, background;
+var ball, paddle, tiles, livesText, introText, pauseText, resumeText, background;
 
 var ballOnPaddle = true;
 var lives = 3;
@@ -81,13 +81,16 @@ function phaserCreate() {
   ball.body.bounce.set(1);
   ball.events.onOutOfBounds.add(helpers.death, this);
 
-  var pauseIcon = String.fromCharCode(124);
-
   scoreText = game.add.text(32, 550, "score: 0", textDefault);
   livesText = game.add.text(700, 550, "lives: 3", textDefault);
-  pauseText = game.add.text(750, 20, pauseIcon + " " + pauseIcon, textPause);
-  introText = game.add.text(game.world.centerX, 400, "-Click to start-", textLarge);
+  introText = game.add.text(game.world.centerX, 400, "Click to start", textLarge);
   introText.anchor.setTo(0.5, 0.5);
+
+  var pauseIcon = String.fromCharCode(124);
+  pauseText = game.add.text(750, 20, pauseIcon + " " + pauseIcon, textPause);
+  pauseText.inputEnabled = true;
+  pauseText.events.onInputUp.add(helpers.pause, this);
+  game.input.onDown.add(helpers.unpause, this);
 
   game.input.onDown.add(helpers.release, this); // Why isn't this in phaserUpdate? Because that's where it's instantiated.
 }
@@ -137,6 +140,18 @@ var helpers = {
     introText.text = "Game Over!";
     introText.visible = true;
 
+  },
+
+  pause: function() {
+    game.paused = true;
+    resumeText = game.add.text(160, 400, "Click anywhere to resume", textLarge);
+  },
+
+  unpause: function() {
+    if(game.paused) {
+      game.paused = false;
+      resumeText.destroy();
+    }
   },
 
   ballCollideWithTile: function(ball, tile) {
