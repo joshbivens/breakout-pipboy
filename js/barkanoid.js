@@ -10,7 +10,7 @@ var game = new Phaser.Game(
   }
 );
 
-var ball, paddle, tiles, livesText, introText, background;
+var ball, paddle, tiles, livesText, introText, pauseText, background;
 
 var ballOnPaddle = true;
 var lives = 3;
@@ -25,6 +25,12 @@ var textDefault = {
 var textLarge = {
   font: "40px Arial",
   align: "center",
+  fill: "#FFF"
+};
+
+var textPause = {
+  font: "20px Arial",
+  fontWeight: "bold",
   fill: "#FFF"
 };
 
@@ -75,8 +81,11 @@ function phaserCreate() {
   ball.body.bounce.set(1);
   ball.events.onOutOfBounds.add(helpers.death, this);
 
+  var pauseIcon = String.fromCharCode(124);
+
   scoreText = game.add.text(32, 550, "score: 0", textDefault);
-  livesText = game.add.text(680, 550, "lives: 3", textDefault);
+  livesText = game.add.text(700, 550, "lives: 3", textDefault);
+  pauseText = game.add.text(750, 20, pauseIcon + " " + pauseIcon, textPause);
   introText = game.add.text(game.world.centerX, 400, "-Click to start-", textLarge);
   introText.anchor.setTo(0.5, 0.5);
 
@@ -127,6 +136,7 @@ var helpers = {
     ball.body.velocity.setTo(0, 0);
     introText.text = "Game Over!";
     introText.visible = true;
+
   },
 
   ballCollideWithTile: function(ball, tile) {
