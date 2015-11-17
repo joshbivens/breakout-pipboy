@@ -29,7 +29,7 @@ var textLarge = {
 };
 
 var textPause = {
-  font: "20px Arial",
+  font: "25px Arial",
   fontWeight: "bold",
   fill: "#FFF"
 };
