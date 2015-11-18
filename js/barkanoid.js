@@ -19,31 +19,28 @@ var score = 0;
 var textDefault = {
   font: "20px Arial",
   align: "left",
-  fill: "#FFF"
+  fill: "#00FF00"
 };
 
 var textLarge = {
   font: "40px Arial",
   align: "center",
-  fill: "#FFF"
+  fill: "#00FF00"
 };
 
 var textPause = {
   font: "25px Arial",
   fontWeight: "bold",
-  fill: "#FFF"
+  fill: "#00FF00"
 };
 
 function phaserPreload() {
-  game.load.image("background", "assets/background.jpg");
-  game.load.image("tile0", "assets/tile0.png");
-  game.load.image("tile1", "assets/tile1.png");
-  game.load.image("tile2", "assets/tile2.png");
-  game.load.image("tile3", "assets/tile3.png");
-  game.load.image("tile4", "assets/tile4.png");
-  game.load.image("tile5", "assets/tile5.png");
-  game.load.image("paddle", "assets/paddle.png");
-  game.load.image("ball", "assets/ball.png");
+  game.load.image("background", "fo4_assets/background.jpg");
+  game.load.image("tile0", "fo4_assets/tile0.png");
+  game.load.image("tile1", "fo4_assets/tile1.png");
+  game.load.image("tile2", "fo4_assets/tile2.png");
+  game.load.image("paddle", "fo4_assets/paddle.png");
+  game.load.image("ball", "fo4_assets/ball.png");
 }
 
 function phaserCreate() {
@@ -58,7 +55,7 @@ function phaserCreate() {
 
   for(var y = 0; y < 4; y++) { // Rows
     for(var x = 0; x < 15; x++) { // Columns
-      var tileRandom = Math.floor(Math.random() * 6);
+      var tileRandom = Math.floor(Math.random() * 3);
       var tile = tiles.create(120 + (x * 36), 100 + (y * 52), "tile" + tileRandom); // We'll see what this does.
       // --VVV-- 'bounce' and 'immovable' are features of the ARCADE physics --VVV--
       tile.body.bounce.set(1); // 1 is full rebound; 0.5 would be 50%.
