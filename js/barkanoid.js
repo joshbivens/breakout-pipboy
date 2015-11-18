@@ -73,7 +73,7 @@ function phaserCreate() {
   }
 
   paddle = game.add.sprite(game.world.centerX, 480, "paddle");
-  paddle.anchor.setTo(0.5, 0.5); //Pixels?
+  paddle.anchor.setTo(0.5, 0.5);
   game.physics.enable(paddle, Phaser.Physics.ARCADE);
   paddle.body.collideWorldBounds = true;
   paddle.body.bounce.set(1);
@@ -87,17 +87,19 @@ function phaserCreate() {
   ball.body.bounce.set(1);
   ball.events.onOutOfBounds.add(helpers.death, this);
 
-  scoreText = game.add.text(32, 550, "score: 0", textDefault);
-  livesText = game.add.text(700, 550, "lives: 3", textDefault);
-  introText = game.add.text(game.world.centerX, 400, "Click to start", textLarge);
-  introText.anchor.setTo(0.5, 0.5);
-
   pauseIcon = game.add.sprite(738, 510, "pause");
   pauseIcon.inputEnabled = true;
   pauseIcon.events.onInputUp.add(helpers.pause, this);
   game.input.onDown.add(helpers.unpause, this);
 
   game.input.onDown.add(helpers.release, this); // Why isn't this in phaserUpdate? Because that's where it's instantiated.
+}
+
+function createText() {
+  scoreText = game.add.text(32, 550, "score: 0", textDefault);
+  livesText = game.add.text(700, 550, "lives: 3", textDefault);
+  introText = game.add.text(game.world.centerX, 400, "Click to start", textLarge);
+  introText.anchor.setTo(0.5, 0.5);
 }
 
 function phaserUpdate() {
