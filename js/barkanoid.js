@@ -49,7 +49,8 @@ function phaserPreload() {
   game.load.image("tile2", "fo4_assets/tile2.png");
   game.load.image("paddle", "fo4_assets/paddle.png");
   game.load.image("ball", "fo4_assets/ball.png");
-  game.load.image("pause", "fo4_assets/pause.png");
+  game.load.image("pause", "fo4_assets/pause.png")
+  game.load.image("restart", "fo4_assets/restart.png");
 }
 
 function phaserCreate() {
@@ -87,10 +88,14 @@ function phaserCreate() {
   ball.body.bounce.set(1);
   ball.events.onOutOfBounds.add(helpers.death, this);
 
-  pauseIcon = game.add.sprite(738, 510, "pause");
+  pauseIcon = game.add.sprite(420, 550, "pause");
   pauseIcon.inputEnabled = true;
   pauseIcon.events.onInputUp.add(helpers.pause, this);
   game.input.onDown.add(helpers.unpause, this);
+
+  restartIcon = game.add.sprite(360, 546, "restart");
+  restartIcon.inputEnabled = true;
+  restartIcon.events.onInputUp.add(helpers.restart, this);
 
   game.input.onDown.add(helpers.release, this); // Why isn't this in phaserUpdate? Because that's where it's instantiated.
 }
@@ -161,6 +166,10 @@ var helpers = {
       game.paused = false;
       resumeText.destroy();
     }
+  },
+
+  restart: function () {
+
   },
 
   ballCollideWithTile: function(ball, tile) {
