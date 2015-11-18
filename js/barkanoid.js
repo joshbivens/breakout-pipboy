@@ -10,6 +10,13 @@ var game = new Phaser.Game(
   }
 );
 
+WebFontConfig = {
+  active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+  google: {
+    families: ['Oswald']
+  }
+};
+
 var ball, paddle, tiles, livesText, introText, pauseIcon, resumeText, background;
 
 var ballOnPaddle = true;
@@ -17,24 +24,25 @@ var lives = 3;
 var score = 0;
 
 var textDefault = {
-  font: "20px Helvetica",
+  font: "20px Oswald",
   align: "left",
   fill: "#00FF00"
 };
 
 var textLarge = {
-  font: "40px Helvetica",
+  font: "40px Oswald",
   align: "center",
   fill: "#00FF00"
 };
 
 var textPause = {
-  font: "25px Helvetica",
-  fontWeight: 900,
+  font: "40px Oswald",
   fill: "#00FF00"
 };
 
 function phaserPreload() {
+  game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+
   game.load.image("background", "fo4_assets/background.jpg");
   game.load.image("tile0", "fo4_assets/tile0.png");
   game.load.image("tile1", "fo4_assets/tile1.png");
@@ -84,7 +92,7 @@ function phaserCreate() {
   introText = game.add.text(game.world.centerX, 400, "Click to start", textLarge);
   introText.anchor.setTo(0.5, 0.5);
 
-  pauseIcon = game.add.sprite(745, 510, "pause");
+  pauseIcon = game.add.sprite(738, 510, "pause");
   pauseIcon.inputEnabled = true;
   pauseIcon.events.onInputUp.add(helpers.pause, this);
   game.input.onDown.add(helpers.unpause, this);
@@ -140,8 +148,10 @@ var helpers = {
   },
 
   pause: function() {
-    game.paused = true;
-    resumeText = game.add.text(160, 400, "Click anywhere to resume", textLarge);
+    if(lives != 0) {
+      game.paused = true;
+      resumeText = game.add.text(200, 400, "Click anywhere to resume", textPause);
+    }
   },
 
   unpause: function() {
