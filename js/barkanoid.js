@@ -10,27 +10,27 @@ var game = new Phaser.Game(
   }
 );
 
-var ball, paddle, tiles, livesText, introText, pauseText, resumeText, background;
+var ball, paddle, tiles, livesText, introText, pauseIcon, resumeText, background;
 
 var ballOnPaddle = true;
 var lives = 3;
 var score = 0;
 
 var textDefault = {
-  font: "20px Arial",
+  font: "20px Helvetica",
   align: "left",
   fill: "#00FF00"
 };
 
 var textLarge = {
-  font: "40px Arial",
+  font: "40px Helvetica",
   align: "center",
   fill: "#00FF00"
 };
 
 var textPause = {
-  font: "25px Arial",
-  fontWeight: "bold",
+  font: "25px Helvetica",
+  fontWeight: 900,
   fill: "#00FF00"
 };
 
@@ -41,6 +41,7 @@ function phaserPreload() {
   game.load.image("tile2", "fo4_assets/tile2.png");
   game.load.image("paddle", "fo4_assets/paddle.png");
   game.load.image("ball", "fo4_assets/ball.png");
+  game.load.image("pause", "fo4_assets/pause.png");
 }
 
 function phaserCreate() {
@@ -63,7 +64,7 @@ function phaserCreate() {
     }
   }
 
-  paddle = game.add.sprite(game.world.centerX, 500, "paddle");
+  paddle = game.add.sprite(game.world.centerX, 480, "paddle");
   paddle.anchor.setTo(0.5, 0.5); //Pixels?
   game.physics.enable(paddle, Phaser.Physics.ARCADE);
   paddle.body.collideWorldBounds = true;
@@ -71,7 +72,7 @@ function phaserCreate() {
   paddle.body.immovable = true;
 
   ball = game.add.sprite(game.world.centerX, paddle.y - 16, "ball");
-  ball.anchor.set(0.5);
+  ball.anchor.set(0.3);
   ball.checkWorldBounds = true;
   game.physics.enable(ball, Phaser.Physics.ARCADE);
   ball.body.collideWorldBounds = true;
@@ -83,10 +84,9 @@ function phaserCreate() {
   introText = game.add.text(game.world.centerX, 400, "Click to start", textLarge);
   introText.anchor.setTo(0.5, 0.5);
 
-  var pauseIcon = String.fromCharCode(124);
-  pauseText = game.add.text(750, 20, pauseIcon + " " + pauseIcon, textPause);
-  pauseText.inputEnabled = true;
-  pauseText.events.onInputUp.add(helpers.pause, this);
+  pauseIcon = game.add.sprite(745, 510, "pause");
+  pauseIcon.inputEnabled = true;
+  pauseIcon.events.onInputUp.add(helpers.pause, this);
   game.input.onDown.add(helpers.unpause, this);
 
   game.input.onDown.add(helpers.release, this); // Why isn't this in phaserUpdate? Because that's where it's instantiated.
