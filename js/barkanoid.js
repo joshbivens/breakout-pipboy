@@ -41,7 +41,11 @@ var textPause = {
 };
 
 function phaserPreload() {
-  game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+  game.load.script("webfont", "//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js");
+
+  game.load.audio("collide", "fo4_assets/collide.mp3");
+  game.load.audio("death", "fo4_assets/death.wav");
+  game.load.audio("gameover", "fo4_assets/gameover.wav");
 
   game.load.image("background", "fo4_assets/background.jpg");
   game.load.image("tile0", "fo4_assets/tile0.png");
@@ -72,6 +76,10 @@ function phaserCreate() {
       tile.body.immovable = true;
     }
   }
+
+  collide = game.add.audio("collide");
+  death = game.add.audio("death");
+  gameover = game.add.audio("gameover");
 
   paddle = game.add.sprite(game.world.centerX, 480, "paddle");
   paddle.anchor.setTo(0.5, 0.5);
@@ -136,6 +144,7 @@ var helpers = {
   },
 
   death: function() {
+    death.play();
     lives--;
     livesText.text = "lives: " + lives;
 
@@ -148,6 +157,8 @@ var helpers = {
   },
 
   gameOver: function() {
+    death.stop();
+    gameover.play();
     ball.body.velocity.setTo(0, 0);
     introText.text = "Game Over!";
     introText.visible = true;
@@ -168,11 +179,8 @@ var helpers = {
     }
   },
 
-  restart: function () {
-
-  },
-
   ballCollideWithTile: function(ball, tile) {
+    collide.play();
     tile.kill();
     score += 10;
     scoreText.text = "score: " + score;
