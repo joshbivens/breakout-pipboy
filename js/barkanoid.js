@@ -43,7 +43,7 @@ var textPause = {
 function phaserPreload() {
   game.load.script("webfont", "//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js");
 
-  game.load.audio("collide", "fo4_assets/collide.mp3");
+  game.load.audio("collide", "fo4_assets/collide.wav");
   game.load.audio("death", "fo4_assets/death.wav");
   game.load.audio("gameover", "fo4_assets/gameover.wav");
 
@@ -160,9 +160,16 @@ var helpers = {
     death.stop();
     gameover.play();
     ball.body.velocity.setTo(0, 0);
-    introText.text = "Game Over!";
+    introText.text = "Game Over!\nClick below to restart";
     introText.visible = true;
+  },
 
+  restart: function() {
+    phaserCreate();
+    createText();
+    ballOnPaddle = true;
+    lives = 3;
+    score = 0;
   },
 
   pause: function() {
