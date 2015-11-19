@@ -43,18 +43,18 @@ var textPause = {
 function phaserPreload() {
   game.load.script("webfont", "//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js");
 
-  game.load.audio("collide", "fo4_assets/collide.wav");
-  game.load.audio("death", "fo4_assets/death.wav");
-  game.load.audio("gameover", "fo4_assets/gameover.wav");
+  game.load.audio("collide", "fo4_assets/sfx/collide.wav");
+  game.load.audio("death", "fo4_assets/sfx/death.wav");
+  game.load.audio("gameover", "fo4_assets/sfx/gameover.wav");
 
-  game.load.image("background", "fo4_assets/background.jpg");
-  game.load.image("tile0", "fo4_assets/tile0.png");
-  game.load.image("tile1", "fo4_assets/tile1.png");
-  game.load.image("tile2", "fo4_assets/tile2.png");
-  game.load.image("paddle", "fo4_assets/paddle.png");
-  game.load.image("ball", "fo4_assets/ball.png");
-  game.load.image("pause", "fo4_assets/pause.png")
-  game.load.image("restart", "fo4_assets/restart.png");
+  game.load.image("background", "fo4_assets/images/background.jpg");
+  game.load.image("tile0", "fo4_assets/images/tile0.png");
+  game.load.image("tile1", "fo4_assets/images/tile1.png");
+  game.load.image("tile2", "fo4_assets/images/tile2.png");
+  game.load.image("paddle", "fo4_assets/images/paddle.png");
+  game.load.image("ball", "fo4_assets/images/ball.png");
+  game.load.image("pause", "fo4_assets/images/pause.png")
+  game.load.image("restart", "fo4_assets/images/restart.png");
 }
 
 function phaserCreate() {
@@ -165,11 +165,11 @@ var helpers = {
   },
 
   restart: function() {
-    phaserCreate();
-    createText();
     ballOnPaddle = true;
     lives = 3;
     score = 0;
+    phaserCreate();
+    createText();
   },
 
   pause: function() {
