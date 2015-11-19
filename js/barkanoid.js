@@ -105,7 +105,7 @@ function phaserCreate() {
   restartIcon.inputEnabled = true;
   restartIcon.events.onInputUp.add(helpers.restart, this);
 
-  game.input.onDown.add(helpers.release, this); // Why isn't this in phaserUpdate? Because that's where it's instantiated.
+  game.input.onDown.add(helpers.release, this);
 }
 
 function createText() {
